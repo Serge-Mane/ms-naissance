@@ -1,5 +1,6 @@
 package tech.sam.ms_naissances.profiles;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -27,10 +28,11 @@ public class ProfilesServicce {
         return this.profilesRepository.findAll();
     }
 
-    //Optional: veut dire si profile existe retourne le sinon retourne null
+    //Optional: veut dire si profile existe retourne le sinon retourne l'erreur
     public Profile read(int id) {
         Optional<Profile> profileOptional= this.profilesRepository.findById(id);
-        return profileOptional.orElse(null);
+        return profileOptional.orElseThrow(() ->new EntityNotFoundException(
+                "Aucune valeur ne correspond aux parametres fournis"));
     }
 
     public Profile update(int id, Profile profile) {
