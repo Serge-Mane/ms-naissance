@@ -32,4 +32,19 @@ public class ProfilesServicce {
         Optional<Profile> profileOptional= this.profilesRepository.findById(id);
         return profileOptional.orElse(null);
     }
+
+    public Profile update(int id, Profile profile) {
+        //d'abord je reccuper le profile dans la bd
+        Profile profileInDatabas=this.read(id);
+
+        //je mets a jour le profile qui etait dans la bd
+        profileInDatabas.setFirstName(profile.getFirstName());
+        profileInDatabas.setLastName(profile.getLastName());
+        profileInDatabas.setEmail(profile.getEmail());
+        profileInDatabas.setPhone(profile.getPhone());
+
+        //je sauvegarde le profile mise a jour puis je retourne le nouveau profile
+        this.profilesRepository.save(profileInDatabas);
+        return profileInDatabas;
+    }
 }

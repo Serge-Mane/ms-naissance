@@ -36,4 +36,9 @@ public class ProfilesControleur {
     public Profile read (@PathVariable int id){
         return this.profilesServicce.read(id);
     }
+
+    @PutMapping(path = "{id}")
+    public Profile update(@PathVariable int id,@RequestBody Profile profile){
+        return  this.profilesServicce.update(id,profile);
+    }
 }
