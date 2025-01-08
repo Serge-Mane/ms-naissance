@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("profiles")
 public class ProfilesControleur {
-    @Autowired
-    private ProfilesServicce profilesServicce;
+    private  final ProfilesServicce profilesServicce;
     Logger logger= LoggerFactory.getLogger(ProfilesControleur.class);
+
+    public ProfilesControleur(ProfilesServicce profilesServicce) {
+        this.profilesServicce = profilesServicce;
+    }
 
     @PostMapping()
     public void create(@RequestBody Profile profile){
