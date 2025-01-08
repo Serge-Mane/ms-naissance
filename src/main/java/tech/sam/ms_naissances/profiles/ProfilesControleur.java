@@ -16,10 +16,6 @@ public class ProfilesControleur {
 
     @PostMapping()
     public void create(@RequestBody Profile profile){
-        logger.trace("creation du compte "+ profile.getEmail());
-        logger.debug("creation du compte "+ profile.getEmail());
         logger.info("creation du compte "+ profile.getEmail());
-        logger.warn("creation du compte "+ profile.getEmail());
-        logger.error("creation du compte "+ profile.getEmail());
     }
 }
