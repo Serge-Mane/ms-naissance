@@ -41,4 +41,9 @@ public class ProfilesControleur {
     public Profile update(@PathVariable int id,@RequestBody Profile profile){
         return  this.profilesServicce.update(id,profile);
     }
+
+    @DeleteMapping(path = "{id}")
+    public  void delete(@PathVariable int id){
+        this.profilesServicce.delete(id);
+    }
 }
