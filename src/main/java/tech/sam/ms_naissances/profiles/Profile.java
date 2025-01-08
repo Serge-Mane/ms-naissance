@@ -1,6 +1,12 @@
 package tech.sam.ms_naissances.profiles;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "profiles")
 public class Profile {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String firstName;
     private  String lastName;
