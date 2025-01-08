@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("profiles")
 public class ProfilesControleur {
+    ProfilesServicce profilesServicce=new ProfilesServicce();
     Logger logger= LoggerFactory.getLogger(ProfilesControleur.class);
 
     @PostMapping()
     public void create(@RequestBody Profile profile){
         logger.info("creation du compte "+ profile.getEmail());
+        this.profilesServicce.create(profile);
     }
 }
