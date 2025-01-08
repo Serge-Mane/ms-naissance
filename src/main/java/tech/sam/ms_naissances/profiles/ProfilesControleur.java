@@ -1,5 +1,7 @@
 package tech.sam.ms_naissances.profiles;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,9 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("profiles")
 public class ProfilesControleur {
+    Logger logger= LoggerFactory.getLogger(ProfilesControleur.class);
 
     @PostMapping()
     public void create(@RequestBody Profile profile){
-    System.out.println("creation du compte "+ profile.getEmail());
+        logger.trace("creation du compte "+ profile.getEmail());
+        logger.debug("creation du compte "+ profile.getEmail());
+        logger.info("creation du compte "+ profile.getEmail());
+        logger.warn("creation du compte "+ profile.getEmail());
+        logger.error("creation du compte "+ profile.getEmail());
     }
 }

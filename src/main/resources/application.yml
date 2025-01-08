@@ -1,3 +1,6 @@
 spring:
   application:
      name: ms-naissances
+logging:
+  level:
+    tech.sam: trace
