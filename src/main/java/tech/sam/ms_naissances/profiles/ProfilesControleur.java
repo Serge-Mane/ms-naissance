@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 public class ProfilesControleur {
     private  final ProfilesServicce profilesServicce;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public void create(@RequestBody Profile profile){
         log.info("creation du compte {} ", profile.getEmail());
@@ -42,6 +44,7 @@ public class ProfilesControleur {
         return  this.profilesServicce.update(id,profile);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "{id}")
     public  void delete(@PathVariable int id){
         this.profilesServicce.delete(id);
