@@ -30,4 +30,10 @@ public class ProfilesControleur {
     public List<Profile> search(){
         return this.profilesServicce.search();
     }
+
+
+    @GetMapping(path = "{id}")
+    public Profile read (@PathVariable int id){
+        return this.profilesServicce.read(id);
+    }
 }
