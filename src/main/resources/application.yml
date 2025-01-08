@@ -1,4 +1,6 @@
 spring:
   application:
      name: ms-naissances
-
+  jpa:
+     hibernate:
+       ddl-auto: validate
