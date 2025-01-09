@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tech.sam.ms_naissances.shared.entities.Address;
 
 @Getter
 @Setter
@@ -23,5 +24,10 @@ public class Profile {
     private  String email;
     private String phone;
     private String password;
-
+    /*@ManyToOne: Une adresse appartient a plusieur user.
+    * {CascadeType.MERGE}: pour dire a la creation du user l'adresse existe deja dans a bd puis on fait merge le user
+    * CascadeType.DETACH: pour dire quand on supprime le user on ne supprime pas l'adresse */
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @JoinColumn(name = "addresses_id")
+    private Address address;
 }

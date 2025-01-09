@@ -4,6 +4,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import tech.sam.ms_naissances.shared.entities.Address;
+import tech.sam.ms_naissances.shared.services.AddressesService;
 import tech.sam.ms_naissances.shared.services.ValidationServices;
 
 import java.util.List;
@@ -13,11 +15,20 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class ProfilesServicce {
+    private final AddressesService addressesService;
     private final ProfilesRepository profilesRepository;
     private final ValidationServices validationServices;
 
     public void create(Profile profile){
         log.info("Nouveau  compte  avec l'email {}", profile.getEmail());
+
+        //je recupere d'abord une adresse
+        if (profile.getAddress() != null){
+            Address address=this.addressesService.create(profile.getAddress());
+            profile.setAddress(address);
+        }
+
+
         //a la creation du profile il faut valider d'abord l'email et le phone
         this.validationServices.validateEmail(profile.getEmail());
         this.validationServices.validatePhone(profile.getPhone());
