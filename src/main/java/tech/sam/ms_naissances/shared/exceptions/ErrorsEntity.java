@@ -1,4 +1,4 @@
-package tech.sam.ms_naissances.exceptions;
+package tech.sam.ms_naissances.shared.exceptions;
 
 import java.time.LocalDateTime;
 

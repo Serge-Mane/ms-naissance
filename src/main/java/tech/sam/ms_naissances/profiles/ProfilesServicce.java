@@ -3,12 +3,8 @@ package tech.sam.ms_naissances.profiles;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import tech.sam.ms_naissances.shared.services.ValidationServices;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +14,13 @@ import java.util.Optional;
 @Service
 public class ProfilesServicce {
     private final ProfilesRepository profilesRepository;
+    private final ValidationServices validationServices;
 
     public void create(Profile profile){
         log.info("Nouveau  compte  avec l'email {}", profile.getEmail());
+        //a la creation du profile il faut valider d'abord l'email et le phone
+        this.validationServices.validateEmail(profile.getEmail());
+        this.validationServices.validatePhone(profile.getPhone());
         this.profilesRepository.save(profile);
     }
 
