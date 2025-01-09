@@ -16,6 +16,8 @@ public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Enumerated(EnumType.STRING)
+    private Civility civility;
     private String firstName;
     private  String lastName;
     private  String email;
