@@ -27,6 +27,21 @@ class ValidationServicesTest {
     }
 
     @Test
+    void shouldThrowExceptionWhenEmailIsInvalid(){
+        //Arrange
+        String email =null;
+
+        //Act
+        RuntimeException exception=assertThrows(
+                RuntimeException.class,
+                () -> this.validationServices.validateEmail(email)
+        );
+
+        //Assert
+        assertEquals(exception.getMessage(),"Le mail est requis");
+    }
+
+    @Test
     void validatePhone() {
     }
 }
