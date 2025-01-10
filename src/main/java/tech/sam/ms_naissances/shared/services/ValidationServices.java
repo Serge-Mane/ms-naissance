@@ -10,9 +10,14 @@ public class ValidationServices {
             throw new RuntimeException("Le mail est requis");
         }
 
-        if(email.indexOf('@') == -1 || email.indexOf('@') == email.length()){
+        if(email.indexOf('@') == -1 ){
             throw new RuntimeException("Le mail est invalide");
         }
+//pour dire si le mail est null et le point est appres le @ c'est invalide
+        if(email.indexOf('.') == -1 && email.indexOf('.') < email.indexOf('@') ){
+            throw new RuntimeException("Le mail est invalide");
+        }
+
     }
 
     public void validatePhone(String phone){
