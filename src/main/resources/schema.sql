@@ -8,6 +8,7 @@ drop table if exists addresses;
 
 create table addresses(
 id int auto_increment primary key,
+tag varchar(30),
 zip varchar(30),
 street varchar(255),
 city varchar(255),
