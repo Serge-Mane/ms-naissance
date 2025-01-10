@@ -1,12 +1,11 @@
 package tech.sam.ms_naissances.profiles;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import tech.sam.ms_naissances.shared.entities.Address;
 
+//builder: est utiliser pour pouvoir retourner la liste des profiles dans ProfilesServicesTest
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
