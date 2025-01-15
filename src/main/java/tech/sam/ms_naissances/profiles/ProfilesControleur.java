@@ -2,13 +2,10 @@ package tech.sam.ms_naissances.profiles;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -23,7 +20,7 @@ public class ProfilesControleur {
 
 
     @GetMapping(produces  = APPLICATION_JSON_VALUE)
-    public List<Profile> search(){
+    public Set<ProfilesDTO> search(){
         return this.profilesServicce.search();
     }
 

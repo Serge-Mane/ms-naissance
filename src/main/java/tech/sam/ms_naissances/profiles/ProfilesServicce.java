@@ -3,23 +3,24 @@ package tech.sam.ms_naissances.profiles;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import tech.sam.ms_naissances.shared.services.AddressesService;
-import tech.sam.ms_naissances.shared.services.ValidationServices;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Slf4j
 @Service
 public class ProfilesServicce {
     private final ProfilesRepository profilesRepository;
+    private final ProfilesMapper profilesMapper;
 
 
-    public List<Profile> search() {
-        return this.profilesRepository.findAll();
+    public Set<ProfilesDTO> search() {
+        List<Profile>profiles=this.profilesRepository.findAll();
+       return profiles.stream().map(this.profilesMapper::entityDTO).collect(Collectors.toSet());
     }
 
     //Optional: veut dire si profile existe retourne le sinon retourne l'erreur

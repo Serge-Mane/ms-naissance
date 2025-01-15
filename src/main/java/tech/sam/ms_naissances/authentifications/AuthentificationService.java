@@ -6,7 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.sam.ms_naissances.profiles.Profile;
 import tech.sam.ms_naissances.profiles.ProfilesDTO;
-import tech.sam.ms_naissances.profiles.ProfilesMapping;
+import tech.sam.ms_naissances.profiles.ProfilesMapper;
 import tech.sam.ms_naissances.profiles.ProfilesRepository;
 import tech.sam.ms_naissances.shared.services.ValidationServices;
 
@@ -14,7 +14,7 @@ import tech.sam.ms_naissances.shared.services.ValidationServices;
 @Slf4j
 @AllArgsConstructor
 public class AuthentificationService {
-    private final ProfilesMapping profilesMapping;
+    private final ProfilesMapper profilesMapper;
     private final BCryptPasswordEncoder passwordEncoder;
     private final ValidationServices validationServices;
     private final ProfilesRepository profilesRepository;
@@ -24,7 +24,7 @@ public class AuthentificationService {
 
         //ici on a pas d'adresse parce que quand l'utilisateur cree son compte il ne met pas son adresse
 
-        Profile profile=this.profilesMapping.dtoEntity(profilesDTO);
+        Profile profile=this.profilesMapper.dtoEntity(profilesDTO);
 
         //je reccupere le mot de passe en claire que l'utilisateur nous a donner
         String userPassword=profile.getPassword();
