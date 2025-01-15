@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import tech.sam.ms_naissances.shared.entities.Address;
 import tech.sam.ms_naissances.shared.services.AddressesService;
 import tech.sam.ms_naissances.shared.services.ValidationServices;
 
@@ -16,32 +15,8 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class ProfilesServicce {
-    private final AddressesService addressesService;
     private final ProfilesRepository profilesRepository;
-    private final ValidationServices validationServices;
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    public void create(Profile profile){
-        log.info("Nouveau  compte  avec l'email {}", profile.getEmail());
-
-        //je recupere d'abord une adresse
-        if (profile.getAddress() != null){
-            Address address=this.addressesService.create(profile.getAddress());
-            profile.setAddress(address);
-        }
-
-        //je reccupere le mot de passe en claire que l'utilisateur nous a donner
-        String userPassword=profile.getPassword();
-        //Puis j'encode le mot de passe
-        String encodedPassword=this.passwordEncoder.encode(userPassword);
-        //le nouveau profile
-        profile.setPassword(encodedPassword);
-
-        //a la creation du profile il faut valider d'abord l'email et le phone
-        this.validationServices.validateEmail(profile.getEmail());
-        this.validationServices.validatePhone(profile.getPhone());
-        this.profilesRepository.save(profile);
-    }
 
     public List<Profile> search() {
         return this.profilesRepository.findAll();

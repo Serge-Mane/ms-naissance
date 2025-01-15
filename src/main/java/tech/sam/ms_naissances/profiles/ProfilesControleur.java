@@ -21,12 +21,6 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 public class ProfilesControleur {
     private  final ProfilesServicce profilesServicce;
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public void create(@RequestBody Profile profile){
-        log.info("creation du compte {} ", profile.getEmail());
-        this.profilesServicce.create(profile);
-    }
 
     @GetMapping(produces  = APPLICATION_JSON_VALUE)
     public List<Profile> search(){
