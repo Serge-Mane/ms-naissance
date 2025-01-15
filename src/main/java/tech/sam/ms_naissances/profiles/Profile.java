@@ -29,4 +29,8 @@ public class Profile {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "addresses_id")
     private Address address;
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @JoinColumn(name = "roles_id")
+    private Role role;
 }
