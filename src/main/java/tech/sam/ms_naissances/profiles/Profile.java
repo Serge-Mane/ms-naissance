@@ -2,7 +2,12 @@ package tech.sam.ms_naissances.profiles;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import tech.sam.ms_naissances.shared.entities.Address;
+
+import java.util.Collection;
+import java.util.List;
 
 //builder: est utiliser pour pouvoir retourner la liste des profiles dans ProfilesServicesTest
 @Builder
@@ -12,7 +17,7 @@ import tech.sam.ms_naissances.shared.entities.Address;
 @AllArgsConstructor
 @Entity
 @Table(name = "profiles")
-public class Profile {
+public class Profile implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -23,6 +28,7 @@ public class Profile {
     private  String email;
     private String phone;
     private String password;
+    private boolean active=false;
     /*@ManyToOne: Une adresse appartient a plusieur user.
     * {CascadeType.MERGE}: pour dire a la creation du user l'adresse existe deja dans a bd puis on fait merge le user
     * CascadeType.DETACH: pour dire quand on supprime le user on ne supprime pas l'adresse */
@@ -33,4 +39,35 @@ public class Profile {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "roles_id")
     private Role role;
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.active;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.active;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.active;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.active;
+    }
 }
