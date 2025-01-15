@@ -36,16 +36,16 @@ class ProfilesControllerTest {
         Profile profileTwo = Profile.builder().email("two@email.com").build();
         when(profilesServicce.search()).thenReturn(List.of(profileOne, profileTwo));
     }
-//
-//    @DisplayName("Lire une liste de profiles")
-//    @Test
-//    void search() throws Exception {
-//        this.mockMvc.perform(get("/profiles"))
-//                .andExpect(status().isOk())
-//                .andDo(print())
-//                .andExpect(content().string(containsString("one@email.test")))
-//                .andExpect(content().string(containsString("two@email.test")));
-//    }
+
+    @DisplayName("Lire une liste de profiles")
+    @Test
+    void search() throws Exception {
+        this.mockMvc.perform(get("/profiles"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().string(containsString("one@email.test")))
+                .andExpect(content().string(containsString("two@email.test")));
+    }
 
     @DisplayName("Créer un profile")
     @Test
