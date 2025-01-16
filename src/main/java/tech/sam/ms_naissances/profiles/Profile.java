@@ -3,11 +3,14 @@ package tech.sam.ms_naissances.profiles;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import tech.sam.ms_naissances.shared.entities.Address;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 //builder: est utiliser pour pouvoir retourner la liste des profiles dans ProfilesServicesTest
 @Builder
@@ -28,7 +31,7 @@ public class Profile implements UserDetails {
     private  String email;
     private String phone;
     private String password;
-    private boolean active=false;
+    private Boolean active=false;
     /*@ManyToOne: Une adresse appartient a plusieur user.
     * {CascadeType.MERGE}: pour dire a la creation du user l'adresse existe deja dans a bd puis on fait merge le user
     * CascadeType.DETACH: pour dire quand on supprime le user on ne supprime pas l'adresse */
@@ -43,7 +46,15 @@ public class Profile implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        List<SimpleGrantedAuthority> authorities=new ArrayList<>();
+        //ajout des roles
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+ this.role.getName().toUpperCase()));
+
+        //ajout des permissions
+        for (Permission permission:this.role.getPermissions()){
+            authorities.add(new SimpleGrantedAuthority(permission.getName().toUpperCase));
+        }
+        return authorities;
     }
 
     @Override
