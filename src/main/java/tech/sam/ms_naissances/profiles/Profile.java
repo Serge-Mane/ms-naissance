@@ -10,7 +10,6 @@ import tech.sam.ms_naissances.shared.entities.Address;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 
 //builder: est utiliser pour pouvoir retourner la liste des profiles dans ProfilesServicesTest
 @Builder
@@ -52,7 +51,7 @@ public class Profile implements UserDetails {
 
         //ajout des permissions
         for (Permission permission:this.role.getPermissions()){
-            authorities.add(new SimpleGrantedAuthority(permission.getName().toUpperCase));
+            authorities.add(new SimpleGrantedAuthority(permission.getName().toUpperCase()));
         }
         return authorities;
     }

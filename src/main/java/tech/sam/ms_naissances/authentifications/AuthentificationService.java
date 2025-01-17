@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.sam.ms_naissances.profiles.*;
+import tech.sam.ms_naissances.security.activations.Activation;
+import tech.sam.ms_naissances.security.activations.ActivationsService;
 import tech.sam.ms_naissances.shared.services.ValidationServices;
 
 @Service
@@ -16,6 +18,7 @@ public class AuthentificationService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final ValidationServices validationServices;
     private final ProfilesRepository profilesRepository;
+    private final ActivationsService activationsService;
 
     public void create(ProfilesDTO profilesDTO){
         log.info("Nouveau  compte  avec l'email {}", profilesDTO.email());
@@ -38,6 +41,13 @@ public class AuthentificationService {
         //a la creation du profile il faut valider d'abord l'email et le phone
         this.validationServices.validateEmail(profile.getEmail());
         this.validationServices.validatePhone(profile.getPhone());
-        this.profilesRepository.save(profile);
+        //je reccupere le profile creer
+        profile=this.profilesRepository.save(profile);
+
+        Activation activation=this.activationsService.create(profile);
+
+        log.info("le code d'activation pour {} est {}",profile.getEmail(),activation.getUserCode());
+
+
     }
 }
