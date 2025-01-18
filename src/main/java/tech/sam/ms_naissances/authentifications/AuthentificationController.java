@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import tech.sam.ms_naissances.profiles.Profile;
 import tech.sam.ms_naissances.profiles.ProfilesDTO;
 
+import java.util.Map;
+
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @AllArgsConstructor
@@ -18,5 +20,12 @@ public class AuthentificationController {
     @PostMapping(path = "sign-up")
     public void create(@RequestBody ProfilesDTO profilesDTO){
         this.authentificationService.create(profilesDTO);
+    }
+
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PostMapping(path = "activate")
+    public void activate(@RequestBody Map<String,String> parameters){
+        this.authentificationService.activate(parameters);
     }
 }

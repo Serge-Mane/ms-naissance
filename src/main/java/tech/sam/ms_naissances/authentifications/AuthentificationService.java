@@ -9,6 +9,8 @@ import tech.sam.ms_naissances.security.activations.Activation;
 import tech.sam.ms_naissances.security.activations.ActivationsService;
 import tech.sam.ms_naissances.shared.services.ValidationServices;
 
+import java.util.Map;
+
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -49,5 +51,11 @@ public class AuthentificationService {
         log.info("le code d'activation pour {} est {}",profile.getEmail(),activation.getUserCode());
 
 
+    }
+
+    public void activate(Map<String, String> parameters) {
+        Profile profile=this.activationsService.validateAnReturnProfile(parameters);
+        profile.setActive(true);
+        this.profilesRepository.save(profile);
     }
 }

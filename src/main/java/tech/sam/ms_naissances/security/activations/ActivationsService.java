@@ -7,7 +7,11 @@ import tech.sam.ms_naissances.profiles.Profile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @AllArgsConstructor
 @Service
@@ -28,5 +32,30 @@ public class ActivationsService {
                 .profiles(profile)
                 .build();
         return this.activationsRepository.save(activation);
+    }
+
+    public Profile validateAnReturnProfile(Map<String, String> parameters) {
+        //je reccupere toutes mes activations
+        List<Activation>activations=this.activationsRepository.findAllByActiveAndDesactivationAfter(
+                true,
+                LocalDateTime.now()
+        );
+        //si y'a pas de probleme jactive
+        activations=activations.stream().filter(
+                activation -> passwordEncoder.matches(
+                        parameters.get("code"),
+                        activation.getCode()
+                )
+        ).toList();
+
+        //sinon je desactive
+        if(activations.isEmpty()){
+            throw new RuntimeException("Le code est invalide ou expiré");
+        }
+
+        Activation activation=activations.getFirst();
+        activation.setActive(Boolean.FALSE);
+        this.activationsRepository.save(activation);
+        return activation.getProfiles();
     }
 }
