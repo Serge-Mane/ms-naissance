@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.sam.ms_naissances.notifications.EmailsService;
+import tech.sam.ms_naissances.notifications.MailpitClient;
 import tech.sam.ms_naissances.profiles.*;
 import tech.sam.ms_naissances.security.activations.Activation;
 import tech.sam.ms_naissances.security.activations.ActivationsService;
