@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import tech.sam.ms_naissances.notifications.EmailsService;
 import tech.sam.ms_naissances.profiles.*;
 import tech.sam.ms_naissances.security.activations.Activation;
 import tech.sam.ms_naissances.security.activations.ActivationsService;
@@ -16,6 +17,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class AuthentificationService {
     private final ProfilesMapper profilesMapper;
+    private final EmailsService emailsService;
     private final RolesRepository rolesRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final ValidationServices validationServices;
@@ -49,6 +51,15 @@ public class AuthentificationService {
         Activation activation=this.activationsService.create(profile);
 
         log.info("le code d'activation pour {} est {}",profile.getEmail(),activation.getUserCode());
+
+        this.emailsService.send(
+                Map.of(
+                        "email",profile.getEmail(),
+                        "name",String.format("%s %s",profile.getFirstName(),profile.getLastName()),
+                        "code",""+ activation.getUserCode(),
+                        "template","activation-code.ftl"
+                )
+        );
 
 
     }
