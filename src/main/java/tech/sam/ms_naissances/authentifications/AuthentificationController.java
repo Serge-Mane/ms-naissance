@@ -23,6 +23,11 @@ public class AuthentificationController {
     }
 
 
+    @PostMapping(path = "sign-in")
+    public void login(@RequestBody Map<String,String> parameters){
+    }
+
+
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping(path = "activate")
     public void activate(@RequestBody Map<String,String> parameters){
