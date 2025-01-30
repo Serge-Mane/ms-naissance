@@ -10,4 +10,5 @@ spring:
       mode: always
 logging:
   level:
+    org.sprringframework.security: trace
     tech.sam: trace

@@ -8,12 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import tech.sam.ms_naissances.security.RsaKeys;
 
 @EnableConfigurationProperties(RsaKeys.class)
-@SpringBootApplication(
-		exclude={
-				SecurityAutoConfiguration.class,
-				ManagementWebSecurityAutoConfiguration.class,
-		}
-)
+@SpringBootApplication
 public class MsNaissancesApplication {
 
 	public static void main(String[] args) {
