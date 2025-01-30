@@ -2,6 +2,9 @@ package tech.sam.ms_naissances.authentifications;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.sam.ms_naissances.notifications.EmailsService;
@@ -16,7 +19,7 @@ import java.util.Map;
 @Service
 @Slf4j
 @AllArgsConstructor
-public class AuthentificationService {
+public class AuthentificationService implements UserDetailsService {
     private final ProfilesMapper profilesMapper;
     private final EmailsService emailsService;
     private final RolesRepository rolesRepository;
@@ -69,5 +72,10 @@ public class AuthentificationService {
         Profile profile=this.activationsService.validateAnReturnProfile(parameters);
         profile.setActive(true);
         this.profilesRepository.save(profile);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return this.profilesRepository.findByEmail(username).orElseThrow(()->new RuntimeException("Aucun n'utilisateur ne corespond aux criteres saisie"));
     }
 }

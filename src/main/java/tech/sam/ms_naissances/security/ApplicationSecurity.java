@@ -8,14 +8,51 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import tech.sam.ms_naissances.authentifications.AuthentificationService;
 
+@EnableWebSecurity
 @Configuration
 public class ApplicationSecurity {
-    private RsaKeys rsaKeys;
+    private final RsaKeys rsaKeys;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final AuthentificationService authentificationService;
+
+    public ApplicationSecurity(RsaKeys rsaKeys, BCryptPasswordEncoder passwordEncoder,AuthentificationService authentificationService) {
+        this.rsaKeys = rsaKeys;
+        this.passwordEncoder = passwordEncoder;
+        this.authentificationService = authentificationService;
+    }
+
+    /*AuthenticationProvider met a disposition de spring tout ce dont qu'il a besoin pour authentifier le user
+    et cette AuthenticationProvider est utiliser par AuthenticationManager qui est un element gobal pour authentifier
+    tous les user*/
+    @Bean
+    AuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider=new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(this.passwordEncoder);
+        daoAuthenticationProvider.setUserDetailsService(this.authentificationService);
+        return daoAuthenticationProvider;
+    }
+
+    /* AuthenticationManager qui est un element gobal pour authentifier
+    tous les user en appellant AuthenticationProvider qui authentifie un user */
+    @Bean
+    AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.authenticationProvider(this.authenticationProvider());
+        return authenticationManagerBuilder.build();
+    }
 
     //pour encoder le token on a besoin de la cle privee et celle public
     @Bean
