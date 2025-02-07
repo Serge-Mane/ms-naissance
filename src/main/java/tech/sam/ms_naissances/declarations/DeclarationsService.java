@@ -6,7 +6,6 @@ import tech.sam.ms_naissances.profiles.Profile;
 import tech.sam.ms_naissances.profiles.ProfilesServicce;
 import tech.sam.ms_naissances.security.services.SecurityService;
 import tech.sam.ms_naissances.shared.entities.Company;
-import tech.sam.ms_naissances.shared.repositories.CompaniesRepository;
 import tech.sam.ms_naissances.shared.services.CompaniesService;
 import tech.sam.ms_naissances.shared.services.StatusService;
 
@@ -14,7 +13,6 @@ import tech.sam.ms_naissances.shared.services.StatusService;
 @Service
 public class DeclarationsService {
     private final CompaniesService companiesService;
-    private final StatusService statusService;
     private final ProfilesServicce profilesServicce;
     private final SecurityService securityService;
     private final DeclarationsRepository declarationsRepository;

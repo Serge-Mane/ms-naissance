@@ -40,5 +40,6 @@ public class Declaration {
     @JoinColumn(name = "company_id")
     private Company company;
 
-
+    @OneToMany(mappedBy = "declaration", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private List<DeclarationStatus> statuses;
 }
