@@ -1,5 +1,6 @@
 package tech.sam.ms_naissances.profiles;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,5 +49,21 @@ public class ProfilesServicce {
     public void delete(int id){
         Profile profile=this.read(id);
         this.profilesRepository.delete(profile);
+    }
+
+/*
+on recherche le profile en fonction de son email /
+ */
+    public Profile createIfNotExists(Profile profile) {
+        if(StringUtils.isEmpty(profile.getEmail())) {
+            return this.profilesRepository.save(profile);
+        }
+        Optional<Profile> optionalProfile = this.profilesRepository.findByEmail(profile.getEmail());
+        if (optionalProfile.isEmpty()) {
+            profile = this.profilesRepository.save(profile);
+        } else {
+            profile = optionalProfile.get();
+        }
+        return profile;
     }
 }
