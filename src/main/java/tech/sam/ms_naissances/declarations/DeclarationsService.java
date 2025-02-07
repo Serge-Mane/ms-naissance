@@ -6,8 +6,12 @@ import tech.sam.ms_naissances.profiles.Profile;
 import tech.sam.ms_naissances.profiles.ProfilesServicce;
 import tech.sam.ms_naissances.security.services.SecurityService;
 import tech.sam.ms_naissances.shared.entities.Company;
+import tech.sam.ms_naissances.shared.entities.Status;
 import tech.sam.ms_naissances.shared.services.CompaniesService;
 import tech.sam.ms_naissances.shared.services.StatusService;
+
+import java.time.LocalDateTime;
+import java.util.Map;
 
 @AllArgsConstructor
 @Service
@@ -16,6 +20,8 @@ public class DeclarationsService {
     private final ProfilesServicce profilesServicce;
     private final SecurityService securityService;
     private final DeclarationsRepository declarationsRepository;
+    private final StatusService statusService;
+    private final DeclarationsStatusRepository declarationsStatusRepository;
 
     public void create(Declaration declaration){
         //reccuperation des informations du parent connecté
@@ -44,7 +50,14 @@ public class DeclarationsService {
         );
         declaration.setName(name);
         //on sauvegarde la declaration
-        this.declarationsRepository.save(declaration);
+        declaration=this.declarationsRepository.save(declaration);
+        Status status=this.statusService.search(Map.of("name","NEW"));
+        DeclarationStatus declarationStatus=DeclarationStatus.builder()
+                .status(status)
+                .declaration(declaration)
+                .registered(LocalDateTime.now())
+                .build();
+        this.declarationsStatusRepository.save(declarationStatus);
     }
 
 }
