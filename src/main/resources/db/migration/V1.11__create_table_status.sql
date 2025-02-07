@@ -1,6 +1,7 @@
 
 -- Création de la table cityhalls
 create table status
+
 (
     id int auto_increment primary key,
     name varchar(255),
