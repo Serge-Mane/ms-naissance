@@ -18,9 +18,7 @@ public class DeclarationsController {
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public List<Declaration> search() {
-
-        return new ArrayList<>();
-                //this.declarationsService.search();
+        return this.declarationsService.search();
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)

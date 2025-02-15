@@ -11,6 +11,7 @@ import tech.sam.ms_naissances.shared.services.CompaniesService;
 import tech.sam.ms_naissances.shared.services.StatusService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -34,7 +35,7 @@ public class DeclarationsService {
 
         //on crée le first parent
         Profile child=this.profilesServicce.createIfNotExists(declaration.getChild());
-        declaration.setSecondParent(child);
+        declaration.setChild(child);
 
         //on crée le company
         Company company=this.companiesService.createIfNotExist(declaration.getCompany());
@@ -60,4 +61,7 @@ public class DeclarationsService {
         this.declarationsStatusRepository.save(declarationStatus);
     }
 
+    public List<Declaration> search() {
+        return this.declarationsRepository.findAll();
+    }
 }

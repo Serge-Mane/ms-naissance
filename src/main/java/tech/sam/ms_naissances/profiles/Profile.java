@@ -11,12 +11,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-//builder: est utiliser pour pouvoir retourner la liste des profiles dans ProfilesServicesTest
 @Builder
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "profiles")
 public class Profile implements UserDetails {
@@ -26,14 +25,12 @@ public class Profile implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Civility civility;
     private String firstName;
-    private  String lastName;
-    private  String email;
+    private String lastName;
+    private String email;
     private String phone;
     private String password;
-    private Boolean active=false;
-    /*@ManyToOne: Une adresse appartient a plusieur user.
-    * {CascadeType.MERGE}: pour dire a la creation du user l'adresse existe deja dans a bd puis on fait merge le user
-    * CascadeType.DETACH: pour dire quand on supprime le user on ne supprime pas l'adresse */
+    private boolean active = false;
+
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "addresses_id")
     private Address address;
@@ -45,14 +42,15 @@ public class Profile implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities=new ArrayList<>();
-        //ajout des roles
-        authorities.add(new SimpleGrantedAuthority("ROLE_"+ this.role.getName().toUpperCase()));
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        // Ajout du role
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.getName().toUpperCase()));
 
-        //ajout des permissions
-        for (Permission permission:this.role.getPermissions()){
+        // Ajout des permissions
+        for (Permission permission: this.role.getPermissions()) {
             authorities.add(new SimpleGrantedAuthority(permission.getName().toUpperCase()));
         }
+
         return authorities;
     }
 
@@ -81,3 +79,8 @@ public class Profile implements UserDetails {
         return this.active;
     }
 }
+
+
+/*@ManyToOne: Une adresse appartient a plusieur user.
+ * {CascadeType.MERGE}: pour dire a la creation du user l'adresse existe deja dans a bd puis on fait merge le user
+ * CascadeType.DETACH: pour dire quand on supprime le user on ne supprime pas l'adresse */
