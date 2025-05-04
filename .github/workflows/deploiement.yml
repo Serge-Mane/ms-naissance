@@ -1,8 +1,10 @@
 name: deploy application
 run-name: ${{ github.actor }} is deploying project 🚀
+
 on:
   push:
   workflow_dispatch:
+
 jobs:
   create-folder:
     name: Create folder on server
@@ -10,12 +12,17 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+
       - name: Setup java version
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
+          distribution: 'temurin'
           java-version: '21'
-      - name: build project
+
+      - name: Make mvnw executable
+        run: chmod +x mvnw
+
+      - name: Build project
         run: |
           ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
-           ls -al target
+          ls -al target
