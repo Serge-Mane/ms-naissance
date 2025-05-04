@@ -8,9 +8,8 @@ import lombok.Setter;
 
 import java.util.List;
 
-
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -30,4 +29,5 @@ public class Role {
 
     )
     private List<Permission> permissions;
+
 }

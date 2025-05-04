@@ -3,7 +3,6 @@ package tech.sam.ms_naissances.shared.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 
 @Builder
 @Setter

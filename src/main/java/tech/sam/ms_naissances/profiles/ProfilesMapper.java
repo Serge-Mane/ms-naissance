@@ -4,26 +4,29 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProfilesMapper {
-
-    public Profile dtoEntity(ProfilesDTO dto){
-        Profile entity=new Profile();
-        entity.setPassword(dto.password());
-        entity.setPhone(dto.phone());
-        entity.setEmail(dto.email());
-        entity.setFirstName(dto.firstName());
-        entity.setLastName(dto.lastName());
+    public Profile dtoToEntity(ProfileDTO dto) {
+        Profile entity = new Profile();
+        entity.setPassword(dto.getPassword());
+        entity.setPhone(dto.getPhone());
+        entity.setEmail(dto.getEmail());
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
         return entity;
     }
 
-    //c'est pour dire on choisit les donnees qu'il doit afficher exple password=null
-    public  ProfilesDTO entityDTO(Profile entity){
-        return new ProfilesDTO(
-                entity.getCivility(),
-                entity.getFirstName(),
-                entity.getLastName(),
-                entity.getEmail(),
-                entity.getPhone(),
-                null
-        );
+    public ProfileDTO entityToDto(Profile entity) {
+        ProfileDTO profileDTO =  ProfileDTO
+                .builder()
+                .civility(entity.getCivility())
+                .firstName(entity.getFirstName())
+                .lastName(entity.getLastName())
+                .email(entity.getEmail())
+                .phone(entity.getPhone())
+                .birthDate(entity.getBirthDate())
+                .build();
+                    if(entity.getRole() != null) {
+                            profileDTO.setRole(entity.getRole().getName());
+                    }
+            return profileDTO;
     }
 }

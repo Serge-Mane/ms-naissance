@@ -1,2 +1,0 @@
-
-alter table profiles add column brithDate datetime;

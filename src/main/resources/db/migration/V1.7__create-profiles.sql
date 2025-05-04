@@ -10,6 +10,7 @@ create table profiles
 
     email varchar(100) unique,
     phone varchar(30) unique,
+    birth_date datetime default current_timestamp,
     creation datetime default current_timestamp,
     addresses_id int,
     constraint fk_profiles_addresses foreign key(addresses_id) references addresses(id)

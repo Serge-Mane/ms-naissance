@@ -21,7 +21,6 @@ public class JWTService {
     private final JwtEncoder jwtEncoder;
     public String generate(Authentication authentication) {
         Instant now = Instant.now();
-
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Set<String> scopes = authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
         JwtClaimsSet jwtClaimsSet = JwtClaimsSet
@@ -32,7 +31,6 @@ public class JWTService {
                 .claim("username", authentication.getName())
                 .claim("scp", scopes)
                 .issuer("self")
-
                 .build();
         return this.jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
     }

@@ -28,12 +28,12 @@ public class AuthentificationService implements UserDetailsService {
     private final ProfilesRepository profilesRepository;
     private final ActivationsService activationsService;
 
-    public void create(ProfilesDTO profilesDTO){
-        log.info("Nouveau  compte  avec l'email {}", profilesDTO.email());
+    public void create(ProfileDTO profilesDTO){
+        log.info("Nouveau  compte  avec l'email {}", profilesDTO.getEmail());
 
         //ici on a pas d'adresse parce que quand l'utilisateur cree son compte il ne met pas son adresse
 
-        Profile profile=this.profilesMapper.dtoEntity(profilesDTO);
+        Profile profile=this.profilesMapper.dtoToEntity(profilesDTO);
 
         //je reccupere le mot de passe en claire que l'utilisateur nous a donner
         String userPassword=profile.getPassword();

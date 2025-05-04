@@ -8,10 +8,7 @@ import tech.sam.ms_naissances.profiles.Profile;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
+import java.util.Random;;
 
 @AllArgsConstructor
 @Service

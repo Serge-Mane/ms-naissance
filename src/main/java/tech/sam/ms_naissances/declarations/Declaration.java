@@ -1,5 +1,6 @@
 package tech.sam.ms_naissances.declarations;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import tech.sam.ms_naissances.profiles.Profile;
@@ -9,8 +10,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -22,6 +23,7 @@ public class Declaration {
     private String name;
     private String description;
     private String comment;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime registered;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
@@ -42,4 +44,5 @@ public class Declaration {
 
     @OneToMany(mappedBy = "declaration", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<DeclarationStatus> statuses;
+
 }

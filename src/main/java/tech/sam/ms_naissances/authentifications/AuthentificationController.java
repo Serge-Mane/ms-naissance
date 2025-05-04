@@ -7,7 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import tech.sam.ms_naissances.profiles.ProfilesDTO;
+import tech.sam.ms_naissances.profiles.ProfileDTO;
 import tech.sam.ms_naissances.security.token.JWTService;
 
 import java.util.Map;
@@ -25,8 +25,8 @@ public class AuthentificationController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "sign-up")
-    public void create(@RequestBody ProfilesDTO profilesDTO){
-        this.authentificationService.create(profilesDTO);
+    public void create(@RequestBody ProfileDTO profileDTO){
+        this.authentificationService.create(profileDTO);
     }
 
 

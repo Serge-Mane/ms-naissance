@@ -8,5 +8,5 @@ import java.util.Map;
 public interface MailpitClient {
 
     @PostExchange("/api/v1/send")
-    void send(@RequestBody Map<String,Object> data);
+    void send(@RequestBody Map<String, Object> data);
 }

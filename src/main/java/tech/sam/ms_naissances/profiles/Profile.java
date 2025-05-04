@@ -7,13 +7,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import tech.sam.ms_naissances.shared.entities.Address;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Builder
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -29,6 +30,7 @@ public class Profile implements UserDetails {
     private String email;
     private String phone;
     private String password;
+    private LocalDateTime birthDate;
     private boolean active = false;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
@@ -48,7 +50,7 @@ public class Profile implements UserDetails {
 
         // Ajout des permissions
         for (Permission permission: this.role.getPermissions()) {
-            authorities.add(new SimpleGrantedAuthority(permission.getName().toUpperCase()));
+           authorities.add(new SimpleGrantedAuthority(permission.getName().toUpperCase()));
         }
 
         return authorities;
@@ -79,8 +81,3 @@ public class Profile implements UserDetails {
         return this.active;
     }
 }
-
-
-/*@ManyToOne: Une adresse appartient a plusieur user.
- * {CascadeType.MERGE}: pour dire a la creation du user l'adresse existe deja dans a bd puis on fait merge le user
- * CascadeType.DETACH: pour dire quand on supprime le user on ne supprime pas l'adresse */
