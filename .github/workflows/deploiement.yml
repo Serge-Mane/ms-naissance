@@ -2,10 +2,11 @@ name: deploy application
 run-name: ${{ github.actor }} is deploying project 🚀
 on:
   push:
-    workflow_dispatch:
+  workflow_dispatch:
 jobs:
   create-folder:
-    runs-on: ubuntu-latest
+    name: Create folder on server
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
