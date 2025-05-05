@@ -15,7 +15,7 @@ jobs:
         with:
           host: ${{ secrets.SERVER_HOST }}
           port: ${{ secrets.SERVER_PORT }}
-          username:  ${{ secrets.USER_NAME }}
+          username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             mkdir -p /opt/mes-naissances/microservice
