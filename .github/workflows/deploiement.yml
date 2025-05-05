@@ -9,7 +9,6 @@ jobs:
   create-folder:
     name: Create folder on server
     runs-on: ubuntu-24.04
-    run: chmod +x opt
     steps:
       - name: execute remote ssh commands
         uses: appleboy/ssh-action@v1.2.0
@@ -19,7 +18,7 @@ jobs:
           username:  ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}`
           script: |
-            mkdir -p /opt/mes-naissances/microservice
+            sudo mkdir -p /opt/mes-naissances/microservice
             ls -al -p /opt/mes-naissances
   build-project:
     name: Create folder on server
