@@ -16,9 +16,9 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           port: ${{ secrets.SERVER_PORT }}
           username:  ${{ secrets.USER_NAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}`
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo mkdir -p /opt/mes-naissances/microservice
+            mkdir -p /opt/mes-naissances/microservice
             ls -al -p /opt/mes-naissances
   build-project:
     name: Create folder on server
