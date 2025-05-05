@@ -17,9 +17,9 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           username:  ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}`
-          script:
+          script: |
             mkdir -p /opt/mes-naissances/microservice
-            ls -alp /opt/mes-naissances
+            ls -al -p /opt/mes-naissances
   build-project:
     name: Create folder on server
     runs-on: ubuntu-24.04
