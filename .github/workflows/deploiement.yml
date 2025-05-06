@@ -9,7 +9,7 @@ jobs:
   create-folder:
     name: Create folder on server
     runs-on: ubuntu-24.04
-    -name: Make mvnw executable
+    -name: Make mkdi executable
     run: chmod +x mkdir
     steps:
       - name: execute remote ssh commands
