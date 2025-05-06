@@ -18,8 +18,8 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            mkdir -p /opt/mes-naissances/microservice
-            ls -al -p /opt/mes-naissances
+            sudo mkdir -p /opt/mes-naissances/microservice
+            sudo ls -al -p /opt/mes-naissances
   build-project:
     runs-on: ubuntu-24.04
     steps:
