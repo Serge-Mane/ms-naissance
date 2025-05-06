@@ -9,6 +9,8 @@ jobs:
   create-folder:
     name: Create folder on server
     runs-on: ubuntu-24.04
+    -name: Make mvnw executable
+    run: chmod +x mkdir
     steps:
       - name: execute remote ssh commands
         uses: appleboy/ssh-action@v1
