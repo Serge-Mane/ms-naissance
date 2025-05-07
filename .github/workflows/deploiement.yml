@@ -9,19 +9,17 @@ jobs:
   create-folder:
     name: Create folder on server
     runs-on: ubuntu-24.04
-    -name: Make mkdi executable
-    run: chmod +x mkdir
     steps:
       - name: execute remote ssh commands
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
+          port: ${{ secrets.PORT }}
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo mkdir -p /opt/mes-naissances/microservice
-            sudo ls -al -p /opt/mes-naissances
+            mkdir -p /opt/mes-naissances/microservice
+            ls -al -p /opt/mes-naissances
   build-project:
     runs-on: ubuntu-24.04
     steps:
