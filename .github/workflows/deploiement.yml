@@ -17,9 +17,10 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.PASSWORD }}
           script: |
-            sudo -S mkdir -p /opt/mesnaissances/microservices
-            sudo -S ls -al -p /opt/mesnaissances
+            sudo mkdir -p /opt/mesnaissances/microservices
+            sudo ls -al -p /opt/mesnaissances
   build-project:
     runs-on: ubuntu-latest
     steps:
