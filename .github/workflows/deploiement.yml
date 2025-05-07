@@ -19,8 +19,8 @@ on:
 #          key: ${{ secrets.SSH_PRIVATE_KEY }}
 #          password: ${{ secrets.PASSWORD }}
 #          script: |
-#            sudo -S mkdir -p /opt/mesnaissances/microservices
-#            sudo -S ls -al -p /opt/mesnaissances
+#            sudo -S mkdir -p /opt/mes-naissances/microservices
+#            sudo -S ls -al -p /opt/mes-naissances
   jobs:
     create-folder:
       name: Create folder on server
@@ -34,9 +34,8 @@ on:
             username: ${{ secrets.USER_NAME }}
             key: ${{ secrets.SSH_PRIVATE_KEY }}
             script: |
-              echo "${{ secrets.PASSWORD }}" | sudo -S mkdir -p /opt/mesnaissances/microservices
-              echo "${{ secrets.PASSWORD }}" | sudo -S ls -al -p /opt/mesnaissances
-
+              echo "${{ secrets.PASSWORD }}" | sudo -S mkdir -p /opt/mes-naissances/microservices
+              echo "${{ secrets.PASSWORD }}" | sudo -S ls -al -p /opt/mes-naissances
   build-project:
     runs-on: ubuntu-latest
     steps:
