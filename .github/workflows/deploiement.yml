@@ -5,22 +5,38 @@ on:
   push:
   workflow_dispatch:
 
-jobs:
-  create-folder:
-    name: Create folder on server
-    runs-on: ubuntu-latest
-    steps:
-      - name: execute remote ssh commands
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
-          username: ${{ secrets.USER_NAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          password: ${{ secrets.PASSWORD }}
-          script: |
-            sudo -S mkdir -p /opt/mesnaissances/microservices
-            sudo -S ls -al -p /opt/mesnaissances
+#jobs:
+#  create-folder:
+#    name: Create folder on server
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: execute remote ssh commands
+#        uses: appleboy/ssh-action@v1
+#        with:
+#          host: ${{ secrets.SERVER_HOST }}
+#          port: ${{ secrets.SERVER_PORT }}
+#          username: ${{ secrets.USER_NAME }}
+#          key: ${{ secrets.SSH_PRIVATE_KEY }}
+#          password: ${{ secrets.PASSWORD }}
+#          script: |
+#            sudo -S mkdir -p /opt/mesnaissances/microservices
+#            sudo -S ls -al -p /opt/mesnaissances
+  jobs:
+    create-folder:
+      name: Create folder on server
+      runs-on: ubuntu-latest
+      steps:
+        - name: execute remote ssh commands
+          uses: appleboy/ssh-action@v1
+          with:
+            host: ${{ secrets.SERVER_HOST }}
+            port: ${{ secrets.SERVER_PORT }}
+            username: ${{ secrets.USER_NAME }}
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
+            script: |
+              echo "${{ secrets.PASSWORD }}" | sudo -S mkdir -p /opt/mesnaissances/microservices
+              echo "${{ secrets.PASSWORD }}" | sudo -S ls -al -p /opt/mesnaissances
+
   build-project:
     runs-on: ubuntu-latest
     steps:
