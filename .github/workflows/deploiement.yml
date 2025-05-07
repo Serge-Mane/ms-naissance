@@ -8,7 +8,7 @@ on:
 jobs:
   create-folder:
     name: Create folder on server
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: execute remote ssh commands
         uses: appleboy/ssh-action@v1
@@ -21,7 +21,7 @@ jobs:
             mkdir -p /opt/mesnaissances/microservices
             ls -al -p /opt/
   build-project:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
