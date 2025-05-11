@@ -17,9 +17,6 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            mkdir -p /serge-mane/mes-naissances/microservices
-            ls -al -p /serge-mane/mes-naissances
   build-project:
     runs-on: ubuntu-latest
     steps:
