@@ -13,8 +13,8 @@ jobs:
       - name: Setup java version
         uses: actions/setup-java@v4
         with:
-        distribution: 'temurin'
-        java-version: '21'
+          distribution: 'temurin'
+          java-version: '21'
 
       - name: build project
         run: |
