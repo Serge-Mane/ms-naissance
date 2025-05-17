@@ -53,7 +53,7 @@ jobs:
           overwrite: true
 
   run-project:
-    name: Create folder on server
+    name: run project on server
     needs: build-project
     runs-on: ubuntu-latest
     steps:
