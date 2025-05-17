@@ -1,8 +1,10 @@
 spring:
+  mail:
+    host: 194.60.87.8
   datasource:
     username: root
     password: bootcamp2024
-    url: jdbc:mysql://localhost:3306/db-naissances
+    url: jdbc:mysql://localhost:3306/bd-serge-mane
   jpa:
     show-sql: true
   sql:
@@ -12,3 +14,5 @@ logging:
   level:
     org.sprringframework.security: trace
     tech.sam: trace
+
+
