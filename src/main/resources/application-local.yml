@@ -1,6 +1,6 @@
 spring:
   mail:
-
+    host: 194.60.87.8
   datasource:
     username: root
     password: bootcamp2024
