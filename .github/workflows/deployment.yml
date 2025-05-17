@@ -68,4 +68,4 @@ jobs:
             chmod +x /opt/mes-naissances/microservice/ms-naissances.jar
             ln -sf /opt/mes-naissances/microservice/ms-naissances.jar /etc/init.d/ms-naissances
             /etc/init.d/ms-naissances stop
-            /etc/init.d/ms-naissances start --spring.datasource.username=${{secrets.MAIL_HOST}} --spring.datasource.username=${{secrets.DATABASE_USERNAME}} --spring.datasource.password=${{secrets.DATABASE_USERPASSWORD}} --spring.datasource.url=${{secrets.DATABASE_URL}} --spring.sql.init.mode=always
+            /etc/init.d/ms-naissances start --spring.mail.host=${{secrets.MAIL_HOST}} --spring.datasource.username=${{secrets.DATABASE_USERNAME}} --spring.datasource.password=${{secrets.DATABASE_USERPASSWORD}} --spring.datasource.url=${{secrets.DATABASE_URL}} --spring.sql.init.mode=always

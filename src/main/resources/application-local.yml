@@ -1,4 +1,6 @@
 spring:
+  mail:
+
   datasource:
     username: root
     password: bootcamp2024
