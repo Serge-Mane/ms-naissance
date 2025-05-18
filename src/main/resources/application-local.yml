@@ -1,4 +1,10 @@
+logging:
+  level:
+    org.sprringframework.security: trace
+    tech.sam: trace
 spring:
+  mail:
+    host: 194.60.87.8
   datasource:
     username: root
     password: bootcamp2024
@@ -8,7 +14,3 @@ spring:
   sql:
     init:
       mode: always
-logging:
-  level:
-    org.sprringframework.security: trace
-    tech.sam: trace
