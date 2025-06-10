@@ -51,7 +51,6 @@ jobs:
           target: /opt/mes-naissances/microservice
           strip_components: 1
           overwrite: true
-
   run-project:
     name: run project on server
     runs-on: ubuntu-latest
