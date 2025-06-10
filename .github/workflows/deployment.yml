@@ -57,6 +57,11 @@ jobs:
     needs: build-project
     steps:
       - name: execute remote ssh commands
+        run: |
+            echo "MAIL_HOST=${{secrets.MAIL_HOST}}"
+            echo "DATABASE_URL=${{secrets.DATABASE_URL}}"
+            echo "DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}"
+            echo "DATABASE_USERPASSWORD=${{secrets.DATABASE_USERPASSWORD}}"
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_HOST }}
