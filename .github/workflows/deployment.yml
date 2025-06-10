@@ -64,13 +64,18 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            echo "Vérification des secrets..."
+            echo "MAIL_HOST=${{secrets.MAIL_HOST}}"
+            echo "DATABASE_URL=${{secrets.DATABASE_URL}}"
+            echo "DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}"
+            echo "DATABASE_USERPASSWORD=${{secrets.DATABASE_USERPASSWORD}}"
+
+            echo "Attribuer les permissions au fichier JAR..."
             chmod +x /opt/mes-naissances/microservice/ms-naissances.jar
+            
             ln -sf /opt/mes-naissances/microservice/ms-naissances.jar /etc/init.d/ms-naissances
             /etc/init.d/ms-naissances stop
             /etc/init.d/ms-naissances start --spring.mail.host=${{secrets.MAIL_HOST}} --spring.datasource.username=${{secrets.DATABASE_USERNAME}} --spring.datasource.password=${{secrets.DATABASE_USERPASSWORD}} --spring.datasource.url=${{secrets.DATABASE_URL}} --spring.sql.init.mode=always
-            echo "MAIL_HOST=${{secrets.MAIL_HOST}}"
-            echo "DATABASE_URL=${{secrets.DATABASE_URL}}"
-           echo "DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}"
-           echo "DATABASE_USERPASSWORD=${{secrets.DATABASE_USERPASSWORD}}"
+            
             
             
