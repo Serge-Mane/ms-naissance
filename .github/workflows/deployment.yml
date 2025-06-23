@@ -24,6 +24,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Make mvnw executable
+        with:
+          distribution: 'temurin'
+          java-version: '21'
         run: chmod +x mvnw
       - name: build project
         run: |
