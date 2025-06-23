@@ -1,81 +1,14 @@
-
-name: deploy application
+name: Deploy Application
 run-name: ${{ github.actor }} is deploying project 🚀
 on:
   push:
   workflow_dispatch:
 jobs:
-  create-folder:
-    name: Create folder on server
+  Create-folder:
     runs-on: ubuntu-latest
-    steps:
-      - name: execute remote ssh commands
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            mkdir -p /opt/mes-naissances/microservice
-  build-project:
-    runs-on: ubuntu-latest
-    needs: create-folder
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Setup java version
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: Make mvnw executable
-        run: chmod +x mvnw
-
-      - name: build project
+      - name: List files in the repository
         run: |
-          ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
-
-      - name: rename project
-        run: |
-          mv target/ms-naissances-*.jar target/ms-naissances.jar
-      - name: Copy files on server
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: target/ms-naissances.jar
-          target: /opt/mes-naissances/microservice
-          strip_components: 1
-          overwrite: true
-  run-project:
-    name: run project on server
-    runs-on: ubuntu-latest
-    needs: build-project
-    steps:
-      - name: execute remote ssh commands
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            echo "Vérification des secrets..."
-            echo "MAIL_HOST=${{secrets.MAIL_HOST}}"
-            echo "DATABASE_URL=${{secrets.DATABASE_URL}}"
-            echo "DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}"
-            echo "DATABASE_USERPASSWORD=${{secrets.DATABASE_USERPASSWORD}}"
-
-            echo "Attribuer les permissions au fichier JAR..."
-            chmod +x /opt/mes-naissances/microservice/ms-naissances.jar
-            
-            ln -sf /opt/mes-naissances/microservice/ms-naissances.jar /etc/init.d/ms-naissances
-            /etc/init.d/ms-naissances stop
-            /etc/init.d/ms-naissances start --spring.mail.host=${{secrets.MAIL_HOST}} --spring.datasource.username=${{secrets.DATABASE_USERNAME}} --spring.datasource.password=${{secrets.DATABASE_USERPASSWORD}} --spring.datasource.url=${{secrets.DATABASE_URL}} --spring.sql.init.mode=always
-            
-            
-            
+          ls -al ${{ github.workspace }}
