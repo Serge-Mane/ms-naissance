@@ -9,6 +9,20 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: List files in the repository
+      - name: Setup java version
         run: |
           ls -al ${{ github.workspace }}
+  build-project:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check out repository code
+          uses: actions/checkout@v4
+        - name: Setup java version
+        - uses: actions/setup-java@v4
+          with:
+            distribution: 'temurin'
+            java-version: '21'
+        - name: Build project
+          run: |
+            ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
+            ls -al target/
