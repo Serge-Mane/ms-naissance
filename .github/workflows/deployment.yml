@@ -61,6 +61,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
+            chmod +x /opt/serge-mane/ms-serge-mane/ms-naissances.jar
             ln -sf /opt/serge-mane/ms-serge-mane/ms-naissances.jar /etc/init.d/ms-naissances
             /etc/init.d/ms-naissances stop
              /etc/init.d/ms-naissances start --spring.mail.host=${{secrets.MAIL_HOST}} --spring.datasource.username=${{secrets.DATABASE_USERNAME}} --spring.datasource.password=${{secrets.DATABASE_USERPASSWORD}} --spring.datasource.url=${{secrets.DATABASE_URL}} --spring.sql.init.mode=always
