@@ -23,10 +23,12 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Make mvnw executable
+      - name: Setup java version
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
+      - name: Make mvnw executable
         run: chmod +x mvnw
       - name: build project
         run: |
