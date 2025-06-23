@@ -12,9 +12,9 @@ jobs:
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_PORT }}
-          password: ${{ secrets.SERVER_USERNAME }}
-          port: ${{ secrets.SSH_PRIVATE_KEY }}
+          username:  ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
           script: |
             mkdir -p /opt/serge-mane/ms-serge-mane
             ls -al -p /opt/serge-mane
