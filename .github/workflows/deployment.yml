@@ -5,24 +5,24 @@ on:
   workflow_dispatch:
 jobs:
   Create-folder:
+    name: Create Folder on Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute remote SSH commands
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_PORT }}
+          password: ${{ secrets.SERVER_USERNAME }}
+          port: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            mkdir -p /opt/serge-mane/ms-serge-mane
+            ls -al -p /opt/serge-mane
+  build-project:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Setup java version
+      - name: List files in the repository
         run: |
           ls -al ${{ github.workspace }}
-  build-project:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check out repository code
-          uses: actions/checkout@v4
-        - name: Setup java version
-        - uses: actions/setup-java@v4
-          with:
-            distribution: 'temurin'
-            java-version: '21'
-        - name: Build project
-          run: |
-            ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
-            ls -al target/
