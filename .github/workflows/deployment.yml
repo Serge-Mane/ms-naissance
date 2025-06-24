@@ -17,7 +17,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
 
           script: |
-            chmod +x /opt/serge-mane/ms-serge-mane
+            chmod +x /opt/
             mkdir -p /opt/serge-mane/ms-serge-mane
   build-project:
     runs-on: ubuntu-latest
