@@ -15,6 +15,7 @@ jobs:
           username:  ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
+
           script: |
             mkdir -p /opt/serge-mane/ms-serge-mane
   build-project:
@@ -49,7 +50,7 @@ jobs:
           strip_components: 1
           overwrite: true
   run-project:
-    name: Create Folder on the Server
+    name: Create Folder on Server
     needs: build-project
     runs-on: ubuntu-latest
     steps:
