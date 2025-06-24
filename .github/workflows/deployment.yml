@@ -60,8 +60,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          script: |
-            echo "Attribuer les permissions au fichier JAR..."
+          run: |
             chmod +x /opt/serge-mane/ms-serge-mane/ms-naissances.jar
             ln -sf /opt/serge-mane/ms-serge-mane/ms-naissances.jar /etc/init.d/ms-naissances
             /etc/init.d/ms-naissances stop
