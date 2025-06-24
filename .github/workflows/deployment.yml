@@ -61,11 +61,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            echo "Vérification des secrets..."
-            echo "MAIL_HOST=${{secrets.MAIL_HOST}}"
-            echo "DATABASE_URL=${{secrets.DATABASE_URL}}"
-            echo "DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}"
-            echo "DATABASE_USERPASSWORD=${{secrets.DATABASE_USERPASSWORD}}"
             echo "Attribuer les permissions au fichier JAR..."
             chmod +x /opt/serge-mane/ms-serge-mane/ms-naissances.jar
             ln -sf /opt/serge-mane/ms-serge-mane/ms-naissances.jar /etc/init.d/ms-naissances
