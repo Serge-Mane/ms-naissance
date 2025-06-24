@@ -49,7 +49,7 @@ jobs:
           strip_components: 1
           overwrite: true
   run-project:
-    name: Create Folder on Server
+    name: Create Folder on the Server
     needs: build-project
     runs-on: ubuntu-latest
     steps:
