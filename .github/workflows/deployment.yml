@@ -61,22 +61,15 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            #!/bin/bash
-            case "$1" in
-              start)
-                echo "Starting ms-naissances"
-                nohup java -jar /opt/serge-mane/ms-serge-mane/ms-naissances.jar \
-                  --spring.mail.host=${MAIL_HOST} \
-                  --spring.datasource.username=${DATABASE_USERNAME} \
-                  --spring.datasource.password=${DATABASE_USERPASSWORD} \
-                  --spring.datasource.url=${DATABASE_URL} \
-                  --spring.sql.init.mode=always &
-                ;;
-              stop)
-                echo "Stopping ms-naissances"
-                pkill -f ms-naissances.jar
-                ;;
-              *)
-                echo "Usage: $0 {start|stop}"
-                exit 1
-            esac
+            echo "Vérification des secrets..."
+            echo "MAIL_HOST=${{secrets.MAIL_HOST}}"
+            echo "DATABASE_URL=${{secrets.DATABASE_URL}}"
+            echo "DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}"
+            echo "DATABASE_USERPASSWORD=${{secrets.DATABASE_USERPASSWORD}}"
+
+            echo "Attribuer les permissions au fichier JAR..."
+            chmod +x /opt/serge-mane/ms-serge-mane/ms-naissances.jar
+            ln -sf /opt/serge-mane/ms-serge-mane/ms-naissances.jar /etc/init.d/ms-naissances
+            /etc/init.d/ms-naissances stop
+            /etc/init.d/${{env.PROJECT}} start --spring.mail.host=${{secrets.MAIL_HOST}} --spring.datasource.username=${{secrets.DATABASE_USERNAME}} --spring.datasource.password=${{secrets.DATABASE_USERPASSWORD}} --spring.datasource.url=${{secrets.DATABASE_URL}} --spring.sql.init.mode=always
+           
