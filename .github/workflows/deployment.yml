@@ -4,7 +4,7 @@ on:
   push:
   workflow_dispatch:
 env:
-  GROUP: /opt/serge-mane/ms-serge-mane
+  GROUP: /opt/serge-mane
   PROJECT: ms-naissances
 jobs:
   create-folder:
@@ -29,7 +29,7 @@ jobs:
       - name: Setup java version
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
+          distribution: 'temurin'
           java-version: '21'
       - name: build project
         run: |
