@@ -14,9 +14,9 @@ jobs:
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.SERVER_HOST }}
           port: ${{ secrets.SERVER_PORT }}
           username: ${{ secrets.SERVER_USERNAME }}
+          host: ${{ secrets.SERVER_HOST }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             mkdir -p ${{env.GROUP}}/${{env.PROJECT}}
