@@ -4,7 +4,7 @@ on:
   push:
   workflow_dispatch:
 env:
-  GROUP: /home/serge-mane
+  GROUP: ~/serge-mane
   PROJECT: ms-naissances
 jobs:
   create-folder:
