@@ -16,7 +16,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           run: |
-            mkdir -p /serge-mane/ms-serge-mane
+            mkdir -p /opt/serge-mane/ms-serge-mane
   build-project:
     runs-on: ubuntu-latest
     needs: Create-folder
@@ -45,7 +45,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           source: target/ms-naissances.jar
-          target: /serge-mane/ms-serge-mane
+          target: /opt/serge-mane/ms-serge-mane
           strip_components: 1
           overwrite: true
   run-project:
@@ -68,8 +68,8 @@ jobs:
             echo "DATABASE_USERPASSWORD=${{secrets.DATABASE_USERPASSWORD}}"
 
             echo "Attribuer les permissions au fichier JAR..."
-            chmod +x /serge-mane/ms-serge-mane/ms-naissances.jar
-            ln -sf /serge-mane/ms-serge-mane/ms-naissances.jar /etc/init.d/ms-naissances
+            chmod +x /opt/serge-mane/ms-serge-mane/ms-naissances.jar
+            ln -sf /opt/serge-mane/ms-serge-mane/ms-naissances.jar /etc/init.d/ms-naissances
             /etc/init.d/ms-naissances stop
             /etc/init.d/${{env.PROJECT}} start --spring.mail.host=${{secrets.MAIL_HOST}} --spring.datasource.username=${{secrets.DATABASE_USERNAME}} --spring.datasource.password=${{secrets.DATABASE_USERPASSWORD}} --spring.datasource.url=${{secrets.DATABASE_URL}} --spring.sql.init.mode=always
            
