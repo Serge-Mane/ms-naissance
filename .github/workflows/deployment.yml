@@ -19,7 +19,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            mkdir -p ${{env.GROUP}}/${{env.PROJECT}}
+            mkdir -m 755 -p ${{env.GROUP}}/${{env.PROJECT}}
   build-project:
     runs-on: ubuntu-24.04
     needs: create-folder
