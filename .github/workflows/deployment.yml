@@ -16,7 +16,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            mkdir -vp /serge-mane/ms-serge-mane
+            chmod + x -p /serge-mane/ms-serge-mane
+            mkdir -p /serge-mane/ms-serge-mane
   build-project:
     runs-on: ubuntu-latest
     needs: Create-folder
