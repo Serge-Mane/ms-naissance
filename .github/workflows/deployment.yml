@@ -4,7 +4,7 @@ on:
   push:
   workflow_dispatch:
 env:
-  GROUP: ~/serge-mane
+  GROUP: /home/serge-mane
   PROJECT: ms-naissances
 jobs:
   create-folder:
@@ -20,6 +20,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             pwd
+            cd /home
             mkdir -p ${{env.GROUP}}/${{env.PROJECT}}
   build-project:
     runs-on: ubuntu-24.04
