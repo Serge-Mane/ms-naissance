@@ -4,7 +4,7 @@ on:
   push:
   workflow_dispatch:
 env:
-  GROUP: serge-mane
+  GROUP: /opt/serge-mane
   PROJECT: ms-naissances
 jobs:
   create-folder:
@@ -19,9 +19,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            pwd
-            cd /home
-            mkdir -p ${{env.GROUP}}/${{env.PROJECT}}
+            ls -al ${{env.GROUP}}/${{env.PROJECT}}
   build-project:
     runs-on: ubuntu-24.04
     needs: create-folder
