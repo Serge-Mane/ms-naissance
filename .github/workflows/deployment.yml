@@ -1,3 +1,4 @@
+
 name: deploy application
 run-name: ${{ github.actor }} is deploying project 🚀
 on:
@@ -9,19 +10,19 @@ env:
 jobs:
   create-folder:
     name: Create folder on server
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
-      - name: executing remote ssh commands
-        uses: appleboy/ssh-action@v1.2.0
+      - name: execute remote ssh commands
+        uses: appleboy/ssh-action@v1
         with:
+          host: ${{ secrets.SERVER_HOST }}
           port: ${{ secrets.SERVER_PORT }}
           username: ${{ secrets.SERVER_USERNAME }}
-          host: ${{ secrets.SERVER_HOST }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             ls -al ${{env.GROUP}}/${{env.PROJECT}}
   build-project:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     needs: create-folder
     steps:
       - name: Check out repository code
@@ -31,18 +32,19 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-          
+
       - name: Make mvnw executable
         run: chmod +x mvnw
 
       - name: build project
         run: |
-            ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
+          ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
+
       - name: rename project
         run: |
-          mv target/${{env.PROJECT}}-*.jar target/${{env.PROJECT}}.jar
-      - name: copy file on server
-        uses: appleboy/scp-action@v0.1.7
+          mv target/ms-naissances-*.jar target/ms-naissances.jar
+      - name: Copy files on server
+        uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.SERVER_HOST }}
           port: ${{ secrets.SERVER_PORT }}
@@ -54,18 +56,32 @@ jobs:
           overwrite: true
   run-project:
     name: run project on server
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     needs: build-project
     steps:
-      - name: executing remote ssh commands
-        uses: appleboy/ssh-action@v1.2.0
+      - name: execute remote ssh commands
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_HOST }}
           port: ${{ secrets.SERVER_PORT }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            echo "Vérification des secrets..."
+            echo "MAIL_HOST=${{secrets.MAIL_HOST}}"
+            echo "DATABASE_URL=${{secrets.DATABASE_URL}}"
+            echo "DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}"
+            echo "DATABASE_USERPASSWORD=${{secrets.DATABASE_USERPASSWORD}}"
+
+            echo "Attribuer les permissions au fichier JAR..."
             chmod +x ${{env.GROUP}}/${{env.PROJECT}}/${{env.PROJECT}}.jar
-            ln -sf ${{env.GROUP}}/${{env.PROJECT}}/${{env.PROJECT}}.jar /etc/init.d/${{env.PROJECT}}
+            
+            ln -sf ${{env.GROUP}}/${{env.PROJECT}}/ms-naissances.jar /etc/init.d/${{env.PROJECT}}
             /etc/init.d/${{env.PROJECT}} stop
             /etc/init.d/${{env.PROJECT}} start --spring.mail.host=${{secrets.MAIL_HOST}} --spring.datasource.username=${{secrets.DATABASE_USERNAME}} --spring.datasource.password=${{secrets.DATABASE_USERPASSWORD}} --spring.datasource.url=${{secrets.DATABASE_URL}} --spring.sql.init.mode=always
+            
+            
+            
+
+
+
