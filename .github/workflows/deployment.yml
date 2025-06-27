@@ -42,6 +42,7 @@ jobs:
 
       - name: rename project
         run: |
+          chmod +x target/ms-naissances-*.jar target/ms-naissances.jar
           mv target/ms-naissances-*.jar target/ms-naissances.jar
       - name: Copy files on server
         uses: appleboy/scp-action@v1
