@@ -31,9 +31,13 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+          
+      - name: Make mvnw executable
+        run: chmod +x mvnw
+
       - name: build project
         run: |
-          ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
+            ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
       - name: rename project
         run: |
           mv target/${{env.PROJECT}}-*.jar target/${{env.PROJECT}}.jar
