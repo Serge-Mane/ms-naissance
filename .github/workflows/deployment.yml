@@ -41,7 +41,7 @@
             run: |
               mv target/ms-naissances-*.jar target/ms-naissances.jar
 
-          - name: copy file on server
+          - name: copy file on servers
             uses: appleboy/scp-action@v1
             with:
               host: ${{ secrets.SERVER_HOST }}
