@@ -16,7 +16,7 @@
               username: ${{ secrets.SERVER_USERNAME }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               script: |
-                sudo -S mkdir -p /opt/serge-mane/ms-serge-mane
+                 mkdir -p /opt/serge-mane/ms-serge-mane
                 ls -al -p /opt/serge-mane
       build-project:
         runs-on: ubuntu-latest
