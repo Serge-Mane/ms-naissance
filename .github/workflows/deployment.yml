@@ -1,88 +1,14 @@
-
-name: deploy application
-run-name: ${{ github.actor }} is deploying project 🚀
-on:
-  push:
-  workflow_dispatch:
-env:
-  GROUP: /opt/serge-mane
-  PROJECT: ms-naissances
-jobs:
-  create-folder:
-    name: Create folder on server
-    runs-on: ubuntu-latest
-    steps:
-      - name: execute remote ssh commands
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            ls -al ${{env.GROUP}}/${{env.PROJECT}}
-  build-project:
-    runs-on: ubuntu-latest
-    needs: create-folder
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Setup java version
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: Make mvnw executable
-        run: chmod +x mvnw
-
-      - name: build project
-        run: |
-          ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
-
-      - name: rename project
-        run: |
-          chmod +x mv
-          mv target/ms-naissances-*.jar target/ms-naissances.jar
-      - name: Copy files on server
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: target/${{env.PROJECT}}.jar
-          target: ${{env.GROUP}}/${{env.PROJECT}}
-          strip_components: 1
-          overwrite: true
-  run-project:
-    name: run project on server
-    runs-on: ubuntu-latest
-    needs: build-project
-    steps:
-      - name: execute remote ssh commands
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            echo "Vérification des secrets..."
-            echo "MAIL_HOST=${{secrets.MAIL_HOST}}"
-            echo "DATABASE_URL=${{secrets.DATABASE_URL}}"
-            echo "DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}}"
-            echo "DATABASE_USERPASSWORD=${{secrets.DATABASE_USERPASSWORD}}"
-
-            echo "Attribuer les permissions au fichier JAR..."
-            chmod +x ${{env.GROUP}}/${{env.PROJECT}}/${{env.PROJECT}}.jar
-            
-            ln -sf ${{env.GROUP}}/${{env.PROJECT}}/ms-naissances.jar /etc/init.d/${{env.PROJECT}}
-            /etc/init.d/${{env.PROJECT}} stop
-            /etc/init.d/${{env.PROJECT}} start --spring.mail.host=${{secrets.MAIL_HOST}} --spring.datasource.username=${{secrets.DATABASE_USERNAME}} --spring.datasource.password=${{secrets.DATABASE_USERPASSWORD}} --spring.datasource.url=${{secrets.DATABASE_URL}} --spring.sql.init.mode=always
-            
-            
-            
-
-
-
+    name: deploy application
+    run-name: ${{ github.actor }} is deploying project 🚀
+    on:
+       push:
+       workflow_dispatch:
+    jobs:
+      create-folder:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Check out repository code
+            uses: actions/checkout@v4
+          - name: List files in the repository
+            run: |
+              ls -al ${{ github.workspace }}
