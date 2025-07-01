@@ -36,6 +36,7 @@
           - name: build project
             run: |
               ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
+              
           - name: rename project
             run: |
               mv target/ms-naissances-*.jar target/ms-naissances.jar
