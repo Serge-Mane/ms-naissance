@@ -5,6 +5,20 @@
        workflow_dispatch:
     jobs:
       create-folder:
+        name: Create folder on server
+        runs-on: ubuntu-latest
+        steps:
+          - name: Execute remote SSH commands
+            uses: appleboy/ssh-action@v1
+            with:
+              host: ${{ secrets.SERVER_HOST }}
+              port: ${{ secrets.SERVER_PORT }}
+              username: ${{ secrets.SERVER_USERNAME }}
+              key: ${{ secrets.SSH_PRIVATE_KEY }}
+              script: |
+                mkdir -p /opt/serge-mane/ms-serge-mane
+                ls -al -p /opt/serge-mane
+      build-project:
         runs-on: ubuntu-latest
         steps:
           - name: Check out repository code
