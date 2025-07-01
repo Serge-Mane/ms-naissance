@@ -19,6 +19,7 @@
                  sudo mkdir -p /opt/serge-mane/ms-serge-mane
                  ls -al -p /opt/serge-mane
       build-project:
+        needs: create-folder
         runs-on: ubuntu-latest
         steps:
           - name: Check out repository code
@@ -35,3 +36,17 @@
           - name: build project
             run: |
               ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
+          - name: rename project
+            run: |
+              mv target/ms-naissances-*.jar /target/ms-naissances.jar
+          - name: Copy file on server
+            uses: appleboy/scp-action@v1
+            with:
+              host: ${{ secrets.SERVER_HOST }}
+              port: ${{ secrets.SERVER_PORT }}
+              username: ${{ secrets.SERVER_USERNAME }}
+              key: ${{ secrets.SSH_PRIVATE_KEY }}
+              source: target/ms-naissances.jar
+              target: /opt/serge-mane/ms-serge-mane
+              strip_components: 1
+              overwrite: true
