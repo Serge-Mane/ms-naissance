@@ -38,7 +38,7 @@
               ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
           - name: rename project
             run: |
-              mv target/ms-naissances-*.jar /target/ms-naissances.jar
+              mv target/ms-naissances-*.jar target/ms-naissances.jar
           - name: Copy file on server
             uses: appleboy/scp-action@v1
             with:
