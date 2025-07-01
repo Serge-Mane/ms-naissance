@@ -17,7 +17,7 @@
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               script: |
                  mkdir -p /opt/serge-mane/ms-serge-mane
-                ls -al -p /opt/serge-mane
+                 ls -al -p /opt/serge-mane
       build-project:
         runs-on: ubuntu-latest
         steps:
