@@ -20,7 +20,6 @@
                  ls -al -p /opt/serge-mane
       build-project:
         runs-on: ubuntu-latest
-        needs: create-folder
         steps:
           - name: Check out repository code
             uses: actions/checkout@v4
@@ -30,7 +29,9 @@
               distribution: 'temurin'
               java-version: '21'
 
+          - name: Make mvnw executable
+            run: chmod +x mvnw
+
           - name: build project
             run: |
               ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
-          
