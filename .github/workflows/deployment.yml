@@ -20,9 +20,17 @@
                  ls -al -p /opt/serge-mane
       build-project:
         runs-on: ubuntu-latest
+        needs: create-folder
         steps:
           - name: Check out repository code
             uses: actions/checkout@v4
-          - name: List files in the repository
+          - name: Setup java version
+            uses: actions/setup-java@v4
+            with:
+              distribution: 'temurin'
+              java-version: '21'
+
+          - name: build project
             run: |
-              ls -al ${{ github.workspace }}
+              ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
+          
