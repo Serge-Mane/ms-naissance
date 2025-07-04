@@ -1,8 +1,11 @@
     name: deploy application
-    run-name: ${{ github.actor }} is deploying project 🚀
+    run-name: ${{ github.actor }} is deploying project backend 🚀
     on:
        push:
        workflow_dispatch:
+    env:
+      GROUP: /opt/serge-mane
+      PROJECT: ms-naissances
     jobs:
       create-folder:
         name: Create folder on server
@@ -16,7 +19,7 @@
               username: ${{ secrets.SERVER_USERNAME }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               script: |
-                 sudo mkdir -p /opt/serge-mane/ms-serge-mane
+                 sudo mkdir -p ${{env.GROUP}}/${{env.PROJECT}}
       build-project:
         needs: create-folder
         runs-on: ubuntu-latest
@@ -38,7 +41,7 @@
 
           - name: rename project
             run: |
-              mv target/ms-naissances-*.jar target/ms-naissances.jar
+              mv target/${{env.PROJECT}}-*.jar target${{env.PROJECT}}.jar
 
           - name: copy file on servers
             uses: appleboy/scp-action@v1
@@ -47,8 +50,8 @@
               port: ${{ secrets.SERVER_PORT }}
               username: ${{ secrets.SERVER_USERNAME }}
               key: ${{ secrets.SSH_PRIVATE_KEY }}
-              source: target/ms-naissances.jar
-              target: /opt/serge-mane/ms-serge-mane
+              source: target/${{env.PROJECT}}.jar
+              target: ${{env.GROUP}}/${{env.PROJECT}}
               strip_components: 1
               overwrite: true
       run-project:
@@ -64,7 +67,7 @@
                 username: ${{ secrets.SERVER_USERNAME }}
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 script: |
-                  ln -sf /opt/serge-mane/ms-serge-mane/ms-naissances.jar /etc/init.d/ms-naissances
-                  sudo /etc/init.d/ms-naissances stop
-                  sudo /etc/init.d/ms-naissances start --spring.mail.host=${{secrets.MAIL_HOST}} --spring.datasource.username=${{secrets.DATABASE_USERNAME}} --spring.datasource.password=${{secrets.DATABASE_USERPASSWORD}} --spring.datasource.url=${{secrets.DATABASE_URL}} --spring.sql.init.mode=always
+                  ln -sf ${{env.GROUP}}/${{env.PROJECT}}/${{env.PROJECT}}.jar /etc/init.d/${{env.PROJECT}}
+                  sudo /etc/init.d/${{env.PROJECT}} stop
+                  sudo /etc/init.d/${{env.PROJECT}} start --spring.mail.host=${{secrets.MAIL_HOST}} --spring.datasource.username=${{secrets.DATABASE_USERNAME}} --spring.datasource.password=${{secrets.DATABASE_USERPASSWORD}} --spring.datasource.url=${{secrets.DATABASE_URL}} --spring.sql.init.mode=always
 
