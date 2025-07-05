@@ -43,7 +43,7 @@
             run: |
               mv target/${{env.PROJECT}}-*.jar target/${{env.PROJECT}}.jar
 
-          - name: copy file on servers
+          - name: copy file on server
             uses: appleboy/scp-action@v1
             with:
               host: ${{ secrets.SERVER_HOST }}
