@@ -41,7 +41,7 @@
 
           - name: rename project
             run: |
-              mv target/${{env.PROJECT}}-*.jar target${{env.PROJECT}}.jar
+              mv target/${{env.PROJECT}}-*.jar target/${{env.PROJECT}}.jar
 
           - name: copy file on servers
             uses: appleboy/scp-action@v1
