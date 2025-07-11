@@ -55,7 +55,7 @@
               strip_components: 1
               overwrite: true
       run-project:
-          name: executing project on the server
+          name: executing project on server
           runs-on: ubuntu-latest
           needs: build-project
           steps:
