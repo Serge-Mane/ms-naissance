@@ -6,10 +6,10 @@ spring:
        ddl-auto: validate
   jackson:
     default-property-inclusion: non_null
-server:
-  port: 40082
-  servlet:
+  server:
+    port: 40082
+    servlet:
     context-path: /api
-rsa:
+  rsa:
   rsa-private-key: classpath:certs/private.pem
   rsa-public-key:  classpath:certs/public.pem
